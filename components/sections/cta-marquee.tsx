@@ -1,57 +1,51 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import Link from "next/link";
 import { Container } from "@/components/ui/container";
+import { PremiumButton } from "@/components/ui/premium-button";
+import { brochure } from "@/lib/content";
 
 const line =
-  "Modularni kontejneri · Stambeni moduli · Kancelarijski prostori · Prodaja kontejnera Srbija · ";
+  "Montažni objekti · Modularni kontejneri · Hale · Stambeni moduli · Kancelarijski prostori · Prodaja kontejnera Srbija · ";
 
 export function CtaMarquee() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden border-t border-white/10 bg-zinc-900 py-16 sm:py-20">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(245,158,11,0.08),_transparent_65%)]" />
-      <div className="relative mb-10 overflow-hidden border-y border-white/5 py-3">
+    <section className="relative overflow-hidden border-t border-paper/10 bg-ink py-20 sm:py-28">
+      <div className="relative mb-12 overflow-hidden border-y border-paper/10 py-4">
         <motion.div
-          className="flex whitespace-nowrap text-xs font-semibold uppercase tracking-[0.35em] text-zinc-500"
+          className="flex whitespace-nowrap font-display text-4xl uppercase text-paper/20 sm:text-6xl"
           animate={reduce ? undefined : { x: ["0%", "-50%"] }}
-          transition={reduce ? undefined : { duration: 38, repeat: Infinity, ease: "linear" }}
+          transition={reduce ? undefined : { duration: 36, repeat: Infinity, ease: "linear" }}
         >
           {Array.from({ length: 4 }).map((_, i) => (
             <span key={i} className="pr-16">
-              {line.repeat(4)}
+              {line.repeat(2)}
             </span>
           ))}
         </motion.div>
       </div>
       <Container className="relative text-center">
-        <h2 className="font-[family-name:var(--font-display)] text-3xl text-white sm:text-4xl md:text-5xl">
-          Spremni za sledeći modul?
+        <h2 className="font-display text-[clamp(2.4rem,7vw,5.5rem)] uppercase leading-[0.9] text-paper">
+          Spremni za
+          <br />
+          <span className="text-corten">sledeći modul?</span>
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-zinc-400">
+        <p className="mx-auto mt-6 max-w-xl font-serif text-lg text-muted">
           Pošaljite kratak brief — vratićemo se sa predlogom konfiguracije i jasnim narednim koracima.
         </p>
-        <motion.div
-          className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
-          initial={reduce ? false : { opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <Link
-            href="/kontakt"
-            className="inline-flex min-w-[200px] items-center justify-center rounded-full bg-gradient-to-r from-amber-500 to-amber-400 px-8 py-3.5 text-sm font-semibold text-zinc-950 shadow-lg shadow-amber-500/20 hover:from-amber-400 hover:to-amber-300"
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <PremiumButton href="/kontakt">Zakažite konsultaciju</PremiumButton>
+          <a
+            href={brochure.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-w-[200px] items-center justify-center rounded-full border border-paper/20 px-8 py-4 font-mono text-[11px] uppercase tracking-[0.22em] text-paper hover:border-corten hover:text-corten"
           >
-            Zakažite konsultaciju
-          </Link>
-          <Link
-            href="/reference"
-            className="inline-flex min-w-[200px] items-center justify-center rounded-full border border-white/20 px-8 py-3.5 text-sm font-semibold text-white hover:border-amber-500/50"
-          >
-            Pogledajte reference
-          </Link>
-        </motion.div>
+            {brochure.label}
+          </a>
+        </div>
       </Container>
     </section>
   );

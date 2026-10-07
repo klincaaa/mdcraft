@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo_Black, DM_Sans } from "next/font/google";
+import { Big_Shoulders, Newsreader, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
 import { FloatingCta } from "@/components/site/floating-cta";
 import { JsonLd } from "@/components/seo/json-ld";
+import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { logoSrc } from "@/lib/content";
 import { siteKeywords, siteUrl } from "@/lib/seo";
 
@@ -14,36 +15,44 @@ const ogLogoUrl = new URL(logoSrc, site).toString();
 const favicon16 = "/images/favicon-16x16-CFbayJj4.png";
 const favicon32 = "/images/favicon-32x32-mWnUlOA9.png";
 
-const display = Archivo_Black({
-  weight: "400",
+const display = Big_Shoulders({
+  weight: ["700", "800"],
   subsets: ["latin", "latin-ext"],
   variable: "--font-display",
   display: "swap",
+  adjustFontFallback: false,
 });
 
-const sans = DM_Sans({
+const serif = Newsreader({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-body",
+  variable: "--font-news",
+  display: "swap",
+});
+
+const mono = IBM_Plex_Mono({
+  weight: ["400", "500"],
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-plex",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: site,
-  applicationName: "MD Craft Kontejneri",
+  applicationName: "MD Craft",
   title: {
-    default: "MD Craft Kontejneri — modularni kontejneri, Srbija",
-    template: "%s | MD Craft Kontejneri",
+    default: "MD Craft — modularni kontejneri, Srbija",
+    template: "%s | MD Craft",
   },
   description:
     "Stambeni i kancelarijski kontejneri, modularni objekti i prodaja kontejnera. Projektovanje, proizvodnja i montaža — Beograd, Srbija.",
   keywords: siteKeywords,
-  authors: [{ name: "MD Craft Kontejneri" }],
-  creator: "MD Craft Kontejneri",
+  authors: [{ name: "MD Craft" }],
+  creator: "MD Craft",
   openGraph: {
     type: "website",
     locale: "sr_RS",
-    siteName: "MD Craft Kontejneri",
-    images: [{ url: ogLogoUrl, alt: "MD Craft Kontejneri logo" }],
+    siteName: "MD Craft",
+    images: [{ url: ogLogoUrl, alt: "MD Craft logo" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -60,7 +69,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#09090b",
+  themeColor: "#0b0a08",
   width: "device-width",
   initialScale: 1,
 };
@@ -71,15 +80,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="sr" className={`${display.variable} ${sans.variable} h-full`}>
-      <body className="flex min-h-full flex-col bg-zinc-950 font-sans text-zinc-100 antialiased">
+    <html lang="sr" className={`${display.variable} ${serif.variable} ${mono.variable} h-full`}>
+      <body className="flex min-h-full flex-col bg-ink text-paper antialiased">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-amber-400 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-zinc-950"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-corten focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink"
         >
           Preskoči na sadržaj
         </a>
         <JsonLd />
+        <div className="grain" aria-hidden />
+        <ScrollProgress />
         <SiteNav />
         <div className="flex flex-1 flex-col">{children}</div>
         <SiteFooter />

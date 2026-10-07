@@ -8,53 +8,44 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { galleryImages } from "@/lib/content";
 
-const preview = galleryImages.slice(0, 6);
+const preview = galleryImages.slice(0, 8);
 
 export function GalleryPreview() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="overflow-x-hidden border-y border-white/5 bg-zinc-950 py-20 sm:py-28">
+    <section className="overflow-hidden border-y border-paper/10 bg-graphite py-24 sm:py-32">
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow="Realizacije"
-            title="Interaktivna galerija"
-            subtitle="Pogledajte autentične fotografije sa terena — završna obrada, spojevi modula i enterijeri u upotrebi."
-            align="center"
-            className="max-w-2xl"
+            index="04"
+            eyebrow="Arhiv"
+            title="Galerija terena"
+            subtitle="Autentične fotografije sa realizacija — fasade, spojevi modula i enterijeri u upotrebi."
           />
         </Reveal>
       </Container>
 
-      <div className="mt-12 w-full min-w-0 sm:mt-16">
-        <div className="mx-auto max-w-7xl min-w-0 px-4 sm:px-6 lg:px-8">
-          <div
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain pb-4 [-ms-overflow-style:none] [scrollbar-width:thin] sm:gap-5 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-track]:bg-transparent"
-          >
-          {preview.map((img, i) => (
+      <div className="mt-14">
+        <div className="flex animate-marquee gap-4 hover:[animation-play-state:paused]">
+          {[...preview, ...preview].map((img, i) => (
             <motion.div
-              key={img.src}
-              className="relative aspect-[3/4] w-[min(17.5rem,85%)] shrink-0 snap-center overflow-hidden rounded-2xl ring-1 ring-white/10 sm:w-52 md:w-56"
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-5%" }}
-              transition={{ duration: 0.5, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={reduce ? undefined : { y: -4 }}
+              key={`${img.src}-${i}`}
+              className="relative aspect-[3/4] w-56 shrink-0 overflow-hidden sm:w-64"
+              whileHover={reduce ? undefined : { y: -10 }}
+              transition={{ type: "spring", stiffness: 260, damping: 22 }}
             >
-              <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="(max-width:640px) 85vw, 224px" />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/70 to-transparent" />
+              <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="256px" />
             </motion.div>
           ))}
-          </div>
         </div>
       </div>
 
-      <Container className="mt-10 flex justify-center">
+      <Container className="mt-12 flex justify-center">
         <Reveal>
           <Link
             href="/galerija"
-            className="rounded-full border border-white/15 bg-white/5 px-8 py-3 text-sm font-semibold text-white backdrop-blur hover:border-amber-500/40 hover:bg-white/10"
+            className="rounded-full border border-paper/20 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.28em] text-paper hover:border-corten hover:text-corten"
           >
             Otvori punu galeriju
           </Link>

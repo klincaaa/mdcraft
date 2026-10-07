@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHeader } from "@/components/sections/page-header";
 import { Container } from "@/components/ui/container";
-import { galleryImages } from "@/lib/content";
+import { GalleryGrid } from "@/components/sections/gallery-grid";
+import { CtaMarquee } from "@/components/sections/cta-marquee";
 import { buildPageMetadata } from "@/lib/seo";
+import { brochure } from "@/lib/content";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Galerija realizacija",
@@ -16,32 +17,25 @@ export default function GalleryPage() {
   return (
     <main id="main-content">
       <PageHeader
+        index="05"
         eyebrow="Fotografije"
         title="Galerija"
         subtitle="Autentične realizacije — spojevi modula, fasade i završna obrada u realnim uslovima."
       />
-      <section className="bg-zinc-950 py-16 sm:py-20">
+      <section className="bg-ink py-16 sm:py-20">
         <Container>
-          <ul className="columns-1 gap-4 sm:columns-2 lg:columns-3 lg:gap-5 [&>li]:mb-4 [&>li]:break-inside-avoid lg:[&>li]:mb-5">
-            {galleryImages.map((img) => (
-              <li key={img.src}>
-                <figure className="group relative overflow-hidden rounded-2xl ring-1 ring-white/10">
-                  <div className="relative aspect-[3/4] w-full">
-                    <Image
-                      src={img.src}
-                      alt={img.alt}
-                      fill
-                      className="object-cover transition duration-700 group-hover:scale-[1.03]"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  </div>
-                  <figcaption className="sr-only">{img.alt}</figcaption>
-                </figure>
-              </li>
-            ))}
-          </ul>
+          <a
+            href={brochure.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mb-10 inline-flex items-center rounded-full border border-paper/20 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.22em] text-paper hover:border-corten hover:text-corten"
+          >
+            {brochure.label}
+          </a>
+          <GalleryGrid />
         </Container>
       </section>
+      <CtaMarquee />
     </main>
   );
 }

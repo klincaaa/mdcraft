@@ -11,7 +11,10 @@ export const siteKeywords = [
   "Srbija",
   "MD Craft",
   "Beograd",
-  "montažni kontejneri",
+  "montažni objekti",
+  "montažne kuće",
+  "montažne hale",
+  "industrijske hale",
 ];
 
 export function buildPageMetadata({
@@ -26,7 +29,7 @@ export function buildPageMetadata({
   keywords?: string[];
 }): Metadata {
   const url = `${siteUrl}${path}`;
-  const brand = "MD Craft Kontejneri";
+  const brand = "MD Craft";
 
   return {
     title,

@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHeader } from "@/components/sections/page-header";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
-import { aboutHighlights, company } from "@/lib/content";
+import { ClipReveal } from "@/components/motion/clip-reveal";
+import { CtaMarquee } from "@/components/sections/cta-marquee";
+import { aboutCopy, aboutHighlights, company, galleryImages, stats } from "@/lib/content";
 import { buildPageMetadata } from "@/lib/seo";
+import { StatCounter } from "@/components/motion/stat-counter";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "O nama",
-  description: `MD Craft Kontejneri — ${company.description} Poslovna adresa: ${company.addressLine}, ${company.city}.`,
+  description: `MD Craft — ${company.description} Poslovna adresa: ${company.addressLine}, ${company.city}.`,
   path: "/o-nama",
 });
 
@@ -15,36 +19,67 @@ export default function AboutPage() {
   return (
     <main id="main-content">
       <PageHeader
+        index="02"
         eyebrow="Tim i vrednosti"
         title="O nama"
-        subtitle="Sa više od 5 godina iskustva u industriji kontejnera, MD Craft Kontejneri je sinonim za kvalitet i pouzdanost u Srbiji."
+        subtitle={aboutCopy.lead}
       />
-      <section className="border-b border-white/5 bg-zinc-950 py-16 sm:py-20">
+      <section className="border-b border-paper/10 bg-ink py-20 sm:py-28">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-            <Reveal>
-              <p className="text-lg leading-relaxed text-zinc-300 sm:text-xl">
-                Specijalizovani smo za prodaju, modifikaciju i održavanje kontejnera. Naš pristup spaja inženjersku disciplinu
-                sa premium završnom obradom — od prvog skica do ključa u vašim rukama.
-              </p>
-              <p className="mt-6 text-base leading-relaxed text-zinc-400">
-                Modularna rešenja smanjuju vreme gradnje, donose predvidljiv budžet i omogućavaju da se kapital usmeri ka
-                poslovanju, a ne ka nepredviđenim troškovima gradilišta.
-              </p>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <ul className="space-y-4 rounded-3xl border border-white/10 bg-zinc-900/50 p-8 backdrop-blur">
+          <div className="grid gap-14 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              {aboutCopy.paragraphs.map((p, i) => (
+                <Reveal key={p} delay={i * 0.06}>
+                  <p className="mt-6 font-serif text-lg leading-relaxed text-paper/80 first:mt-0 sm:text-xl">
+                    {p}
+                  </p>
+                </Reveal>
+              ))}
+              <Reveal delay={0.2}>
+                <p className="mt-10 max-w-xl font-display text-3xl uppercase leading-none text-corten sm:text-4xl">
+                  {company.manifesto}
+                </p>
+              </Reveal>
+            </div>
+            <div className="lg:col-span-5">
+              <ClipReveal>
+                <div className="relative aspect-[4/5] overflow-hidden">
+                  <Image
+                    src={galleryImages[2].src}
+                    alt={galleryImages[2].alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                  />
+                </div>
+              </ClipReveal>
+              <ul className="mt-8 space-y-4">
                 {aboutHighlights.map((line) => (
-                  <li key={line} className="flex gap-3 text-zinc-200">
-                    <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-amber-400" aria-hidden />
+                  <li key={line} className="flex gap-3 border-b border-paper/10 pb-4 font-serif text-paper/85">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-corten" aria-hidden />
                     {line}
                   </li>
                 ))}
               </ul>
-            </Reveal>
+            </div>
           </div>
         </Container>
       </section>
+      <section className="bg-graphite py-16 sm:py-20">
+        <Container>
+          <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <p className="font-display text-5xl uppercase text-paper sm:text-6xl">
+                  <StatCounter value={s.value} suffix={s.suffix} />
+                </p>
+                <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+      <CtaMarquee />
     </main>
   );
 }

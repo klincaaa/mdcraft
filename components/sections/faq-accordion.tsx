@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
 import { faq } from "@/lib/content";
 
 export function FaqAccordion() {
@@ -10,28 +9,26 @@ export function FaqAccordion() {
   const reduce = useReducedMotion();
 
   return (
-    <div className="space-y-3">
+    <div className="divide-y divide-paper/10 border-y border-paper/10">
       {faq.map((item, i) => {
         const isOpen = open === i;
         return (
-          <div
-            key={item.q}
-            className="overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/60 backdrop-blur"
-          >
+          <div key={item.q}>
             <button
               type="button"
               onClick={() => setOpen(isOpen ? null : i)}
-              className="flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5"
+              className="flex w-full cursor-pointer items-baseline justify-between gap-6 py-6 text-left sm:py-8"
               aria-expanded={isOpen}
             >
-              <span className="text-base font-medium text-white sm:text-lg">{item.q}</span>
-              <motion.span
-                animate={{ rotate: isOpen ? 180 : 0 }}
-                transition={reduce ? { duration: 0 } : { duration: 0.25 }}
-                className="shrink-0 text-amber-500"
-              >
-                <ChevronDown className="h-5 w-5" aria-hidden />
-              </motion.span>
+              <span className="flex gap-5">
+                <span className="font-mono text-[11px] tracking-[0.22em] text-corten">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="font-display text-2xl uppercase leading-none text-paper sm:text-3xl">
+                  {item.q}
+                </span>
+              </span>
+              <span className="font-mono text-corten">{isOpen ? "–" : "+"}</span>
             </button>
             <AnimatePresence initial={false}>
               {isOpen ? (
@@ -39,9 +36,10 @@ export function FaqAccordion() {
                   initial={reduce ? false : { height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className="overflow-hidden"
                 >
-                  <p className="border-t border-white/5 px-5 pb-5 pt-0 text-sm leading-relaxed text-zinc-400 sm:px-6 sm:pb-6 sm:text-base">
+                  <p className="max-w-2xl pb-8 pl-10 font-serif text-base leading-relaxed text-muted sm:pl-14 sm:text-lg">
                     {item.a}
                   </p>
                 </motion.div>
