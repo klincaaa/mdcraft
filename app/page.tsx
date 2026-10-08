@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CinematicHero } from "@/components/sections/cinematic-hero";
+import { House3DSection } from "@/components/House3DSection";
 import { StatsRow } from "@/components/sections/stats-row";
 import { Manifesto } from "@/components/sections/manifesto";
 import { ServicesOverview } from "@/components/sections/services-overview";
@@ -21,6 +22,7 @@ export default function HomePage() {
   return (
     <main id="main-content">
       <CinematicHero />
+      <House3DSection />
       <StatsRow />
       <Manifesto />
       <ServicesOverview />
